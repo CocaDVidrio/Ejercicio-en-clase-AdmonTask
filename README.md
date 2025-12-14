@@ -1,36 +1,10 @@
-#  API REST - Task Manager (Gestión de Tareas)
+El objetivo principal fue migrar de una estructura de programación monolítica a una modular. La API permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) y gestionar el estado de las tareas, manipulando datos en memoria y respondiendo mediante el protocolo HTTP estándar.
 
-Este proyecto consiste en el desarrollo de una **API RESTful** utilizando **Node.js** y **Express**, diseñada bajo el patrón de arquitectura **MVC (Modelo-Vista-Controlador)**. El sistema permite la administración completa de tareas (To-Do List) mediante operaciones CRUD, gestionando la persistencia de datos en memoria y validando el flujo de información entre el cliente y el servidor.
+Durante el desarrollo de este proyecto, me enfrenté a desafíos técnicos que fortalecieron mi comprensión del backend:
 
-##  Objetivos del Proyecto
+Al principio, separar la lógica fue confuso. El mayor reto fue unificar los nombres de las funciones entre las capas 
+Implementar correctamente el flujo de datos para que el servidor no se bloqueara o respondiera antes de tiempo.
+Aprendí a dejar de enviar simples strings y comenzar a usar códigos de estado precisos 
+La implementación del endpoint `toggle` (para cambiar el estado de completado a pendiente y viceversa) 
+Comprendí que un backend robusto no solo procesa datos, sino que valida que la estructura JSON entrante sea la correcta antes de operar con ella.
 
-* **Arquitectura Modular:** Separación clara de responsabilidades:
-    * **Modelo:** Definición de datos y lógica de almacenamiento.
-    * **Controlador:** Lógica de negocio y manejo de peticiones/respuestas.
-    * **Rutas:** Definición de endpoints y métodos HTTP.
-* **Gestión de Estado:** Implementación de lógica para marcar tareas como completadas/pendientes.
-* **Manejo de Respuestas HTTP:** Uso correcto de códigos de estado (`200`, `201`, `404`) y respuestas JSON estructuradas.
-
-##  Endpoints Disponibles
-
-La API expone los siguientes recursos para interactuar con las tareas:
-
-| Método | Endpoint | Descripción |
-| :--- | :--- | :--- |
-| `GET` | `/tasks` | Obtiene la lista completa de tareas (`findAll`). |
-| `GET` | `/tasks/:id` | Busca una tarea por su ID único. Retorna `404` si no existe. |
-| `POST` | `/tasks` | Crea una nueva tarea. Genera ID con `randomUUID`. |
-| `DELETE`| `/tasks/:id` | Elimina una tarea del sistema. |
-| `PATCH` | `/tasks/:id` | Actualiza el título de una tarea existente. |
-| `PATCH` | `/tasks/:id/toggle`| Invierte el estado de la tarea (Pendiente ↔ Completada). |
-
-##  Detalles Técnicos y Soluciones
-
-### Modelo (`Model`)
-Se implementó un arreglo en memoria para simular la base de datos. Se solucionaron problemas de consistencia donde las búsquedas retornaban booleanos, ajustando las funciones `findId` para retornar el objeto completo o `null`, permitiendo al controlador tomar decisiones precisas.
-
-### Controlador (`Controller`)
-Se estandarizó la comunicación servidor-cliente. Se implementaron validaciones para asegurar que los datos de entrada (como el título) sean texto válido y se estructuraron los mensajes de error para ofrecer retroalimentación clara en caso de recursos no encontrados.
-
-### Rutas (`Routes`)
-Se utilizó `express.Router()` para desacoplar las rutas del archivo principal, mejorando la mantenibilidad y organización del código.
